@@ -85,13 +85,21 @@ class Car {
   fill (gallons) {
     return (this.tank = this.tank + gallons);
   }
-  drive (distance) {
-    Math.floor(this.tank);
-    this.odometer = this.odometer + distance;
-        return `I ran out of fuel at ${this.odometer} miles!`;
-    }
-  }
+  drive(distance) {
+      this.odometer = this.odometer + distance;
+      const gas = distance / this.milesPerGallon;
+      const maxDistance = this.tank * this.milesPerGallon;
 
+      if (this.tank >= gas) {
+        this.odometer = distance;
+        this.tank -= gas;
+      } else {
+        this.odometer = maxDistance;
+        this.tank = 0;
+        return `I ran out of fuel at ${this.odometer} miles!`;
+      }
+    }
+ };
 /*
   TASK 3
     - Write a Lambdasian class.
@@ -164,10 +172,10 @@ class Student extends Lambdasian{
     super (sAttrs);
     this.previousBackground = sAttrs.previousBackground;
     this.className = sAttrs.className;
-    this.favSubjects = sAttrs.favSubjects = [];
+    this.favSubjects = sAttrs.favSubjects;
   }
   listSubjects () {
-    return this.favSubjects = [];
+    return `${this.favSubjects}`;
   }
   PRAssignment (subject) {
     return `${this.name} has submitted a PR for ${subject}`;
@@ -176,7 +184,6 @@ class Student extends Lambdasian{
     return `${this.name} has begun sprint challenge on ${subject}`;
   }
 }
-
 /*
   TASK 6
     - Write a ProjectManager class extending Instructor.
